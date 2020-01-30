@@ -9,11 +9,27 @@ io.on('connection', socket => {
   console.log('CONNECTED', socket.id);
 
   io.of('/deliveries', socket => {
+
     // handle recieved event
     socket.on('recieved', payload => {
       let {clientID, messageID, event} = payload;
       delete undelivered[clientID][messageID][event];
     });
+
+    // handle getall undelivered messages
+    socket.on('getall', messages => {
+      try{
+        let {event, clientID} = messages;
+
+        for(const messageID in undelivered[event][clientID]){
+          let payload = undelivered[event][clientID][messageID];
+          console.log('sending to ', clientID, event);
+          io.of('deliveries').to(clientID).emit(event, {messageID, payload});
+        }
+      }
+      catch(error){console.error(error);}
+    }); 
+
     // handle subscribe event
     socket.on('subscribe', payload => {
       let {event, clientID} = payload;
