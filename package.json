@@ -1,0 +1,23 @@
+{
+  "name": "401-lab-19",
+  "version": "1.0.0",
+  "description": "Message Queues",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tskyles-401-advanced-javascript/401-lab-19.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tskyles-401-advanced-javascript/401-lab-19/issues"
+  },
+  "homepage": "https://github.com/tskyles-401-advanced-javascript/401-lab-19#readme"
+}
