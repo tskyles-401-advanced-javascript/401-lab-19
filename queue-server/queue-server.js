@@ -9,6 +9,11 @@ io.on('connection', socket => {
   console.log('CONNECTED', socket.id);
 
   io.of('/deliveries', socket => {
+    // handle recieved event
+    socket.on('recieved', payload => {
+      let {clientID, messageID, event} = payload;
+      delete undelivered[clientID][messageID][event];
+    });
     // handle subscribe event
     socket.on('subscribe', payload => {
       let {event, clientID} = payload;
