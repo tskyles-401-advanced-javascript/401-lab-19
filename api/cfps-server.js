@@ -11,12 +11,13 @@ app.use(express.json());
 
 app.post('/delivery/:retailer/:code', handleEvent);
 
-function postThing(req, res){
+function handleEvent(req, res){
   let payload = {
-    retailer: TODO, 
-    code: TODO,
+    retailer: 'TODO', 
+    code: 'TODO',
   };
-  socket.emit('package-delivered', payload);
+  // socket.emit('package-delivered', {clientID: 'api', payload: payload});
+  console.log(req);
   res.status(200).send(payload);
 }
 
