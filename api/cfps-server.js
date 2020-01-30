@@ -16,7 +16,7 @@ function handleEvent(req, res){
     retailer: 'TODO', 
     code: 'TODO',
   };
-  // socket.emit('package-delivered', {clientID: 'api', payload: payload});
+  socket.emit('package-delivered', {clientID: 'api', payload: payload});
   console.log(req);
   res.status(200).send(payload);
 }
