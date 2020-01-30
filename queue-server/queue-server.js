@@ -49,8 +49,10 @@ io.on('connection', socket => {
     function eventHandler(event, message){
       let messageID = uuid();
       // check for subsscribers in undelievered and add into message payload
-
-      socket.emit(event, {messageID: messageID, payload: message});
+      for(const subscriber in undelivered[event]){
+        undelivered[event][subscriber][messageID] = message.payload;
+      }
+      socket.emit(event, {messageID: messageID, payload: message.payload});
     }
   });
 });
