@@ -7,7 +7,7 @@ const Queue = require('../classes/queue');
 const undelivered = {};
 
 io.on('connection', socket => {
-  console.log('CONNECTED', socket.id);
+  console.log('CONNECTED:', socket.id);
 });
 
 const deliveries = io.of('/deliveries');
@@ -26,7 +26,7 @@ deliveries.on('connection', socket => {
       undelivered[readReciept.clientID].dequeue();
     }
     else{
-      throw console.error('ERROR.... messageID does not match');
+      console.error('ERROR.... messageID does not match');
     }
   }
 
@@ -34,7 +34,6 @@ deliveries.on('connection', socket => {
   function subscribeHandler(payload){
     let {clientID} = payload;
     if(!undelivered[clientID]){undelivered[clientID] = new Queue();}
-    console.log(undelivered);
     socket.join(clientID);
     console.log('JOINED ROOM: ', clientID);
   }
@@ -44,6 +43,7 @@ deliveries.on('connection', socket => {
     let messageID = uuid();
 
     for(let subscriber in undelivered){
+      if(subscriber !== message.retailer) console.error('could not find your client...');
       if(subscriber === message.retailer) undelivered[subscriber].enqueue({messageID: messageID, message: message, event: event});
     }
     socket.to(message.retailer).emit(event, {messageID: messageID, payload: message});
