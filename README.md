@@ -10,10 +10,10 @@
 
 ### Setup
 #### How to initialize/run your server app (where applicable)
-* `node` cfps-server
-* `node` queue-server
-* `node` acme-widgets
-* `node` flower-shop
+* `node` /api/app.js
+* `node` /queue-server/queue-server.js
+* `node` /clients/acme-widgets.js
+* `node` /clients/flower-shop.js
 * To send messages post to:
   * `/delivery/:retailer/:code`
   

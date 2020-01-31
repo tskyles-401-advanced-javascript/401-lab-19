@@ -5,7 +5,6 @@ const io = require('socket.io-client');
 const socket = io.connect('http://localhost:3001/deliveries');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
