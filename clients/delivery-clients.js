@@ -29,8 +29,6 @@ class DeliveryClient {
       socket.emit('recieved', readReciept);
     }
   }
-
-
 }
 
 module.exports = DeliveryClient;
