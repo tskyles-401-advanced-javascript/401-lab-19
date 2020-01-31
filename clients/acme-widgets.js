@@ -8,7 +8,7 @@ const socket = io.connect('http://localhost:3001/deliveries');
 socket.emit('subscribe', {event: 'package-delivered', clientID: 'acmewidgets'});
 
 // emit getall event
-// socket.emit('getall', {event: 'package-delivered', clientID: 'acme-widgets'});
+socket.emit('getall', {event: 'package-delivered', clientID: 'acmewidgets'});
 
 // crud handling
 socket.on('package-delivered', message => handleDelivered(message));
@@ -19,7 +19,7 @@ socket.on('package-delivered', message => handleDelivered(message));
 function handleDelivered(message){
   console.log('DELIVERED', message.payload);
   let readReciept = {
-    clientID: 'acmeWidget',
+    clientID: message.payload.retailer,
     messageID: message.messageID,
     event: 'package-delivered',
   };
