@@ -4,18 +4,16 @@ const io = require('socket.io-client');
 
 const socket = io.connect('http://localhost:3001/deliveries');
 
-// subscribe to package-delivered event
-socket.emit('subscribe', {event: 'package-delivered', clientID: 'acmewidgets'});
+// subscribe to client specific room
+socket.emit('subscribe', {clientID: 'acmewidgets'});
 
-// emit getall event
+// get all stored messages for client
 socket.emit('getall', {event: 'package-delivered', clientID: 'acmewidgets'});
 
 // crud handling
 socket.on('package-delivered', message => handleDelivered(message));
 
-// on package-delivered event
-// log custom message
-// respond with read reciept so queue can dequeue
+// recieve message from queue server and send read reciept back to queue server
 function handleDelivered(message){
   console.log('DELIVERED', message.payload);
   let readReciept = {
@@ -26,5 +24,4 @@ function handleDelivered(message){
   socket.emit('recieved', readReciept);
 }
 
-socket.on('test', message => console.log(message));
 

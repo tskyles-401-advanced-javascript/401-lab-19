@@ -20,6 +20,10 @@ deliveries.on('connection', socket => {
     if(undelivered[readReciept.clientID][0].messageID === readReciept.messageID){
       undelivered[readReciept.clientID].shift();
     }
+    else{
+      throw console.error('ERROR.... messageID does not match');
+      
+    }
   });
 
   // handle getall undelivered messages
@@ -35,7 +39,7 @@ deliveries.on('connection', socket => {
     console.log('JOINED ROOM: ', clientID);
   });
 
-  socket.on('package-delivery', message => eventHandler('package-delivered', message));
+  socket.on('package-delivered', message => eventHandler('package-delivered', message));
 
   // recieve delivery message, add unique messageID and emit to correct client
   function eventHandler(event, message){
