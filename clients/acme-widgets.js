@@ -26,4 +26,5 @@ function handleDelivered(message){
   socket.emit('recieved', readReciept);
 }
 
+socket.on('test', message => console.log(message));
 

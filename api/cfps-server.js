@@ -19,7 +19,7 @@ function handleEvent(req, res){
     code: req.params.code,
   };
 
-  socket.emit('package-delivered', payload);
+  socket.emit('package-delivery', payload);
   res.status(200).send(payload);
 }
 
