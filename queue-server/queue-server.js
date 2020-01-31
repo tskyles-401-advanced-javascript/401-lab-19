@@ -3,8 +3,7 @@
 const io = require('socket.io')(3001);
 const uuid = require('uuid').v4;
 
-const undelivered = {
-};
+const undelivered = {};
 
 io.on('connection', socket => {
   console.log('CONNECTED', socket.id);
@@ -15,31 +14,29 @@ const deliveries = io.of('/deliveries');
 deliveries.on('connection', socket => {
   console.log('CONNECTED: deliveries');
 
-  // handle recieved event
-  socket.on('recieved', readReciept => {
+  socket.on('recieved', readReciept => recievedHandler(readReciept));
+  socket.on('getall', message => {handleGetAll(message);});
+  socket.on('subscribe', payload => subscribeHandler(payload));
+  socket.on('package-delivered', message => eventHandler('package-delivered', message));
+
+  // check if top message ID matches readreciept messageID and delete
+  function recievedHandler(readReciept){
     if(undelivered[readReciept.clientID][0].messageID === readReciept.messageID){
       undelivered[readReciept.clientID].shift();
     }
     else{
       throw console.error('ERROR.... messageID does not match');
-      
     }
-  });
-
-  // handle getall undelivered messages
-  socket.on('getall', message => {handleGetAll(message);});
+  }
 
   // join client specific room when client emits subscribe event
-  socket.on('subscribe', payload => {
- 
+  function subscribeHandler(payload){
     let {clientID} = payload;
     if(!undelivered[clientID]){undelivered[clientID] = [];}
 
     socket.join(clientID);
     console.log('JOINED ROOM: ', clientID);
-  });
-
-  socket.on('package-delivered', message => eventHandler('package-delivered', message));
+  }
 
   // recieve delivery message, add unique messageID and emit to correct client
   function eventHandler(event, message){

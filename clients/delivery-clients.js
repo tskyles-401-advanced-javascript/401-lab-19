@@ -14,10 +14,8 @@ class DeliveryClient {
     socket.emit('subscribe', {clientID: this.clientID});
     // get all stored messages for client
     socket.emit('getall', {event: 'package-delivered', clientID: this.clientID});
-
     // crud handling
     socket.on('package-delivered', message => handleDelivered(message));
-
     // recieve message from queue server and send read reciept back to queue server
     function handleDelivered(message){
       console.log('DELIVERED', message.payload);
