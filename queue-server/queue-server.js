@@ -52,7 +52,6 @@ deliveries.on('connection', socket => {
   // get and send all stored messages for repective client
   function handleGetAll(message){
     for(let subscriber in undelivered){
-      console.log(undelivered);
       if(subscriber === message.clientID){
         if(undelivered[subscriber].peek() === null){
           return;

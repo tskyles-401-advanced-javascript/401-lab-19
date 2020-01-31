@@ -14,7 +14,8 @@
 * `node` queue-server
 * `node` acme-widgets
 * `node` flower-shop
-* hit routes to send messages
+* To send messages post to:
+  * `/delivery/:retailer/:code`
   
 #### Tests
 * Unit Tests: `npm test`

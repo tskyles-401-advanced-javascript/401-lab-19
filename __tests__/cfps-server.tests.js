@@ -1,10 +1,15 @@
 'use strict';
 
+const request = require('supertest');
+const app = require('../api/cfps-server');
+
 describe('cfps-server fuctionality', () => {
 
-  it('returns data when the route is hit', () => {
-    let test = 'pass';
-
-    expect(test).toBe('pass');
+  it('can hit the route successfully', () => {
+    return request(app).post('/delivery/test-company/12345')
+      .then(response => {
+        console.log(response);
+        expect(response.status).toBe(200);
+      });
   });
 });

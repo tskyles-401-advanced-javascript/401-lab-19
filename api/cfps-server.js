@@ -23,4 +23,4 @@ function handleEvent(req, res){
   res.status(200).send(payload);
 }
 
-app.listen(PORT, () => console.log(`api server listening on ${PORT}`));
+module.exports = app;
